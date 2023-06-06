@@ -103,7 +103,7 @@ var Player = class Player {
   }
 }
 
-Player.prototype.size = new Vec(1, 1);
+Player.prototype.size = new Vec(0.8, 0.8);
 
 // 硬幣角色類別
 var Coin = class Coin {
@@ -124,7 +124,7 @@ var Coin = class Coin {
   }
 }
 
-Coin.prototype.size = new Vec(1.2, 1.2);
+Coin.prototype.size = new Vec(1, 1);
 
 // 定義關卡角色的對應關係
 var levelChars = {
@@ -175,7 +175,7 @@ function drawGrid(level) {
 
 //角色圖片
 //Player.prototype.sprite = "image/steve.png";
-Player.prototype.sprite = actorImages.player[0];
+Player.prototype.sprite = actorImages.player[1];
 Coin.prototype.sprite = actorImages.coin[Math.floor(Math.random() * (actorImages.coin.length - 1))];
 
 // 繪製角色
