@@ -13,6 +13,20 @@ var simpleLevelPlan = `
 // "." 代表空白區域，"#" 代表牆壁
 // "@" 代表玩家角色，"o" 代表硬幣
 
+// 定義角色圖片路徑
+const actorImages = {
+  player: [
+    'image/player/alex.png',
+    'image/player/steve.png'
+  ],
+  coin: [
+    'image/coin/apple.png',
+    'image/coin/bread.png',
+    'image/coin/cookie.png',
+    'image/coin/SweetBerries.png'
+  ]
+};
+
 var Level = class Level {
   constructor(plan) {
     // 移除空白字元，以換行符號拆分字串為陣列，並將每一行轉為字元陣列
@@ -161,8 +175,8 @@ function drawGrid(level) {
 
 //角色圖片
 //Player.prototype.sprite = "image/steve.png";
-Player.prototype.sprite = "image/alex.png";
-Coin.prototype.sprite = "image/coin.png";
+Player.prototype.sprite = actorImages.player[0];
+Coin.prototype.sprite = actorImages.coin[Math.floor(Math.random() * (actorImages.coin.length - 1))];
 
 // 繪製角色
 function drawActors(actors) {
@@ -172,7 +186,7 @@ function drawActors(actors) {
     if (actor.type === "player") {
       rect.style.backgroundImage = `url(${actor.sprite})`;
       rect.style.backgroundSize = "cover";
-    }else if(actor.type ==="coin"){
+    } else if (actor.type === "coin") {
       rect.style.backgroundImage = `url(${actor.sprite})`;
       rect.style.backgroundSize = "cover";
     }
