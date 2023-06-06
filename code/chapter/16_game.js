@@ -404,3 +404,26 @@ function runLevel(level, Display) {
     });
   });
 }
+
+
+//運行遊戲
+async function runGame(plans, Display) {
+  end = plans.length;
+  for (let level = 0; level < plans.length;) {
+    let status = await runLevel(new Level(plans[level]), Display);
+    if (status == "won") {
+      document.querySelector(".viewScore").innerHTML = "";
+      level++;
+      sumzt = true;
+    }
+    if (level == plans.length - 1) {
+      const button = document.createElement("button");
+
+      button.innerHTML = "Button";
+      document.body.appendChild(button);
+    }
+  }
+  //runLevel(new Level(plans[plans.length-1]), Display);  //轉移到結束關卡
+  console.log("You've won!");
+}
+
