@@ -384,7 +384,7 @@ function runAnimation(frameFunc) {
 
 //運行關卡
 function runLevel(level, Display) {
-  let display = new Display(document.body, level);
+  let display = new Display(document.querySelector(".scream"), level);
   let state = State.start(level);
   let ending = 1;
   return new Promise(resolve => {

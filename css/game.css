@@ -3,6 +3,7 @@ body {
   background-color: #b7e4c7;
 }
 
+
 .background {
   background-image: url("../image/grass.png");
   table-layout: fixed;
@@ -44,7 +45,13 @@ body {
   box-shadow: -4px -7px 8px white, 4px -7px 8px white;
 }
 
-body {
+.viewScore {
+  text-align: center;
+}
+
+.scream {
   margin-top: 10%;
   margin-left: 20%;
+  max-width: 600px;
+  max-height: 450px;
 }
