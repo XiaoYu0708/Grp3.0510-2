@@ -124,7 +124,7 @@ var Coin = class Coin {
   }
 }
 
-Coin.prototype.size = new Vec(1, 1);
+Coin.prototype.size = new Vec(1.2, 1.2);
 
 // 定義關卡角色的對應關係
 var levelChars = {
@@ -175,7 +175,7 @@ function drawGrid(level) {
 
 //角色圖片
 //Player.prototype.sprite = "image/steve.png";
-Player.prototype.sprite = actorImages.player[1];
+Player.prototype.sprite = actorImages.player[0];
 Coin.prototype.sprite = actorImages.coin[Math.floor(Math.random() * (actorImages.coin.length - 1))];
 
 // 繪製角色
@@ -264,6 +264,8 @@ State.prototype.update = function (time, keys) {
 
   let player = newState.player;
 
+  viewScore(newState.actors.filter(a => a != this));
+
   for (let actor of actors) {
     if (actor != player && overlap(actor, player)) {
       newState = actor.collide(newState);
@@ -287,6 +289,32 @@ Coin.prototype.collide = function (state) {
   if (!filtered.some(a => a.type == "coin")) status = "won";
   return new State(state.level, filtered, status);
 };
+
+var sumzt = true;
+var scoresum = 0;
+var scorenow = 0;
+
+function viewScore(arr) {
+  scorenow = 0;
+
+  if (sumzt == true) {
+    scoresum = 0;
+  }
+
+  arr.forEach(once => {
+    if (once.type == "coin") {
+      scorenow++;
+    }
+  });
+
+  if (sumzt == true) {
+    scoresum = scorenow;
+  }
+
+  sumzt = false;
+
+  document.querySelector(".viewScore").innerHTML = `${scoresum - scorenow}/${scoresum}`;
+}
 
 var wobbleSpeed = 8, wobbleDist = 0.07;
 
@@ -382,7 +410,11 @@ async function runGame(plans, Display) {
   for (let level = 0; level < plans.length;) {
     let status = await runLevel(new Level(plans[level]),
       Display);
-    if (status == "won") level++;
+    if (status == "won") {
+      document.querySelector(".viewScore").innerHTML = "";
+      level++;
+      sumzt = true;
+    }
   }
   console.log("You've won!");
 }
