@@ -404,17 +404,3 @@ function runLevel(level, Display) {
     });
   });
 }
-
-//運行遊戲
-async function runGame(plans, Display) {
-  for (let level = 0; level < plans.length;) {
-    let status = await runLevel(new Level(plans[level]),
-      Display);
-    if (status == "won") {
-      document.querySelector(".viewScore").innerHTML = "";
-      level++;
-      sumzt = true;
-    }
-  }
-  console.log("You've won!");
-}
