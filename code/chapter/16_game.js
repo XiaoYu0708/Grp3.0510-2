@@ -312,9 +312,9 @@ function viewScore(arr, level) {
   }
 
   sumzt = false;
-  if(level == 0){
+  if (level == 0) {
     document.querySelector(".viewScore").innerHTML = "挑戰成功！";
-  }else{
+  } else {
     document.querySelector(".viewScore").innerHTML = `第 ${level} 關&emsp;&emsp;收集到的食物：${scoresum - scorenow}/${scoresum}`;
   }
 }
@@ -428,3 +428,16 @@ async function runGame(plans, Display) {
   //console.log("You've won!");
 }
 
+function openCity(evt, cityName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(cityName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
