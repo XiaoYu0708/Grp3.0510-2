@@ -174,9 +174,8 @@ function drawGrid(level) {
 }
 
 //角色圖片
-//Player.prototype.sprite = "image/steve.png";
-Player.prototype.sprite = actorImages.player[0];
-Coin.prototype.sprite = actorImages.coin[Math.floor(Math.random() * (actorImages.coin.length - 1))];
+Player.prototype.sprite = actorImages.player[1];
+Coin.prototype.sprite = actorImages.coin[Math.floor(Math.random() * (actorImages.coin.length))];
 
 // 繪製角色
 function drawActors(actors) {
@@ -264,7 +263,7 @@ State.prototype.update = function (time, keys) {
 
   let player = newState.player;
 
-  viewScore(newState.actors.filter(a => a != this));
+  viewScore(newState.actors.filter(a => a != this), nowLevel);
 
   for (let actor of actors) {
     if (actor != player && overlap(actor, player)) {
@@ -294,7 +293,8 @@ var sumzt = true;
 var scoresum = 0;
 var scorenow = 0;
 
-function viewScore(arr) {
+//顯示目前收集到的硬幣及關卡
+function viewScore(arr, level) {
   scorenow = 0;
 
   if (sumzt == true) {
@@ -312,8 +312,11 @@ function viewScore(arr) {
   }
 
   sumzt = false;
-
-  document.querySelector(".viewScore").innerHTML = `${scoresum - scorenow}/${scoresum}`;
+  if(level == 0){
+    document.querySelector(".viewScore").innerHTML = "挑戰成功！";
+  }else{
+    document.querySelector(".viewScore").innerHTML = `第 ${level} 關&emsp;&emsp;收集到的食物：${scoresum - scorenow}/${scoresum}`;
+  }
 }
 
 var wobbleSpeed = 8, wobbleDist = 0.07;
@@ -405,25 +408,23 @@ function runLevel(level, Display) {
   });
 }
 
+let nowLevel = 1;
 
 //運行遊戲
 async function runGame(plans, Display) {
-  end = plans.length;
-  for (let level = 0; level < plans.length;) {
+  for (let level = 0; level < plans.length - 1;) {
     let status = await runLevel(new Level(plans[level]), Display);
     if (status == "won") {
       document.querySelector(".viewScore").innerHTML = "";
+      nowLevel++;
       level++;
       sumzt = true;
     }
-    if (level == plans.length - 1) {
-      const button = document.createElement("button");
-
-      button.innerHTML = "Button";
-      document.body.appendChild(button);
-    }
   }
-  //runLevel(new Level(plans[plans.length-1]), Display);  //轉移到結束關卡
-  console.log("You've won!");
+  nowLevel = 0;
+  document.querySelector(".buttons button").disabled = false;
+  runLevel(new Level(plans[plans.length - 1]), Display);  //轉移到結束關卡
+  //document.querySelector(".viewScore").innerHTML = "挑戰成功！";
+  //console.log("You've won!");
 }
 
