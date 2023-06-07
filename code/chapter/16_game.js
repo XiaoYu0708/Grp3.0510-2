@@ -259,11 +259,11 @@ State.prototype.update = function (time, keys) {
     .map(actor => actor.update(time, this, keys));
   let newState = new State(this.level, actors, this.status);
 
+  viewScore(newState.actors.filter(a => a != this), nowLevel);
+
   if (newState.status != "playing") return newState;
 
   let player = newState.player;
-
-  viewScore(newState.actors.filter(a => a != this), nowLevel);
 
   for (let actor of actors) {
     if (actor != player && overlap(actor, player)) {
@@ -428,7 +428,9 @@ async function runGame(plans, Display) {
   //console.log("You've won!");
 }
 
-function openCity(evt, cityName) {
+openGameRule('London');
+
+function openGameRule(cityName) {
   var i, tabcontent, tablinks;
   tabcontent = document.getElementsByClassName("tabcontent");
   for (i = 0; i < tabcontent.length; i++) {
@@ -439,5 +441,7 @@ function openCity(evt, cityName) {
     tablinks[i].className = tablinks[i].className.replace(" active", "");
   }
   document.getElementById(cityName).style.display = "block";
-  evt.currentTarget.className += " active";
+  document.querySelector(`.tab button[name=${cityName}]`).className += " active";
 }
+
+runGame(GAME_LEVELS, DOMDisplay);
